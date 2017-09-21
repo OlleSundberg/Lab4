@@ -10,7 +10,31 @@ namespace Lab_4_Spel
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("hello worldlololol");
+            while(true)
+            {
+                switch(Console.ReadKey(true).KeyChar)
+                {
+                    case 'W':
+                    case 'w':
+                        //if ( Room.N ) {
+                        //Player Y++
+                        Console.WriteLine("You went north.");
+                        //} else {cw "you cant go this way";}
+                        break;
+                    case 'A':
+                    case 'a':
+                        //Player X--
+                        break;
+                    case 'S':
+                    case 's':
+                        //Player Y--
+                        break;
+                    case 'D':
+                    case 'd':
+                        //Player X++
+                        break;
+                }
+            }
         }
     }
 }

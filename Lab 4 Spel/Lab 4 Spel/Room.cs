@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab_4_Spel
 {
-    class Class1
+    class Room
     {
-        int x = 3;
     }
 }
