@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Olle:    49
+// Viktor:  44
+// ???
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +16,7 @@ namespace Lab_4_Spel
         static void Main(string[] args)
         {
             Player player = new Player(12, 3);
+            Keys keys = new Keys();
 
             //Map setup:
             int mapWidth = 14;
@@ -33,6 +38,7 @@ namespace Lab_4_Spel
             int turns = 0;
             while (true)
             {
+                player.check(map);
                 turns++;
                 for (int y = 0; y < mapHeight; y++)
                 {
@@ -49,10 +55,12 @@ namespace Lab_4_Spel
                             }
                             else if (map[x, y].visible)
                             {
+                                Console.ForegroundColor = map[x, y].color;
                                 Console.Write(map[x, y].mapIcon);
                                 Console.Write(map[x, y].mapIcon);
                                 Console.Write(map[x, y].mapIcon);
                                 Console.Write(map[x, y].mapIcon);
+                                Console.ForegroundColor = ConsoleColor.Gray;
                             }
                             else {
                                 Console.Write(' ');
@@ -65,8 +73,24 @@ namespace Lab_4_Spel
                     }
                 }
                 Console.WriteLine("");
-                Console.WriteLine("HP: ");
-                Console.WriteLine("Keys: ");
+                Console.Write("HP: ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(player.HP);
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Write("Keys: ");
+                if (keys.hasRed)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("o--m ");
+                }
+                if (keys.hasGreen)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("o--m");
+                }
+                Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine("Turns: " + turns);
 
 
                 // Beskriv rummet (baserat på enum?):
@@ -77,26 +101,60 @@ namespace Lab_4_Spel
                     case 'w':
                         if (map[player.X, player.Y - 1].type != RoomType.Wall)
                             player.Y--;
+                        else
+                            turns--;
                         break;
                     case 'A':
                     case 'a':
-                        if (map[player.X - 1, player.Y].type != RoomType.Wall)
+                        if (map[player.X-1,player.Y].type == RoomType.Door &&
+                            ((map[player.X - 1, player.Y].specialColor == "Green" && keys.hasGreen) ||
+                            (map[player.X - 1, player.Y].specialColor == "Red" && keys.hasRed)))
+                        {
+                            map[player.X - 1, player.Y].type = RoomType.Empty;
+                            map[player.X - 1, player.Y].mapIcon = '.';
+                        }
+                        if (map[player.X - 1, player.Y].type != RoomType.Wall && map[player.X-1,player.Y].type != RoomType.Door)
                             player.X--;
+                        else
+                            turns--;
+                        if (map[player.X, player.Y].type == RoomType.Key)
+                        {
+                            if (map[player.X, player.Y].specialColor == "Green")
+                                keys.hasGreen = true;
+                            else
+                                keys.hasRed = true;
+                            map[player.X, player.Y].type = RoomType.Empty;
+                            map[player.X, player.Y].mapIcon = '.';
+                            map[player.X, player.Y].color = ConsoleColor.Gray;
+                        }
                         break;
                     case 'S':
                     case 's':
                         if (map[player.X, player.Y + 1].type != RoomType.Wall)
                             player.Y++;
+                        else
+                            turns--;
                         break;
                     case 'D':
                     case 'd':
                         if (map[player.X + 1, player.Y].type != RoomType.Wall)
                             player.X++;
+                        else
+                            turns--;
                         break;
                 }
+                if (player.X == 1 && player.Y == 1)
+                    winGame(turns);
                 player.check(map);
                 Console.Clear();
             }
+        }
+        static void winGame(int turns)
+        {
+            Console.Clear();
+            Console.WriteLine("Congratulations, you win! Turns: " + turns);
+            Console.ReadKey();
+            Environment.Exit(0);
         }
     }
 }
