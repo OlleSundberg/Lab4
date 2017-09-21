@@ -8,9 +8,9 @@ namespace Lab_4_Spel
 {
     class Keys
     {
-        bool red;
-        bool green;
-        bool blue;
-        bool yellow;
+        public bool hasRed;
+        public bool hasBlue;
+        public bool hasYellow;
+        public bool hasGeen;
     }
 }
