@@ -15,8 +15,16 @@ namespace Lab_4_Spel
         public int x, y;
         public char mapIcon { get; set; }
         public Program.RoomType type;
+        public bool visible = false;
 
         public Room(int x, int y, char mapIcon, Program.RoomType type)
+        {
+            this.x = x;
+            this.y = y;
+            this.mapIcon = mapIcon;
+            this.type = type;
+        }
+        public Room(int x, int y, char mapIcon, Program.RoomType type, bool border)
         {
             this.x = x;
             this.y = y;
@@ -47,6 +55,10 @@ namespace Lab_4_Spel
     }
     class Wall : Room
     {
+        public Wall(int x, int y, bool border) : base(x, y, '#', Program.RoomType.Wall, border)
+        {
+            this.visible = true;
+        }
         public Wall(int x, int y) : base(x, y, '#', Program.RoomType.Wall) { }
     }
     class Empty : Room
