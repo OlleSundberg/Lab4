@@ -8,5 +8,7 @@ namespace Lab_4_Spel
 {
     class Player
     {
+        int X;
+        int Y;
     }
 }
