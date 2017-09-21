@@ -36,16 +36,38 @@ namespace Lab_4_Spel
                 turns++;
                 for (int y = 0; y < mapHeight; y++)
                 {
-                    for (int x = 0; x < mapWidth; x++)
+                    for (int i = 0; i < 3; i++)
                     {
-                        if (x == player.X && y == player.Y)
-                            Console.Write('@');
-                        else if (map[x, y].visible)
-                            Console.Write(map[x, y].mapIcon);
-                        else Console.Write(' ');
+                        for (int x = 0; x < mapWidth; x++)
+                        {
+                            if (x == player.X && y == player.Y)
+                            {
+                                Console.Write('@');
+                                Console.Write('@');
+                                Console.Write('@');
+                                Console.Write('@');
+                            }
+                            else if (map[x, y].visible)
+                            {
+                                Console.Write(map[x, y].mapIcon);
+                                Console.Write(map[x, y].mapIcon);
+                                Console.Write(map[x, y].mapIcon);
+                                Console.Write(map[x, y].mapIcon);
+                            }
+                            else {
+                                Console.Write(' ');
+                                Console.Write(' ');
+                                Console.Write(' ');
+                                Console.Write(' ');
+                            }
+                        }
+                        Console.WriteLine("");
                     }
-                    Console.WriteLine("");
                 }
+                Console.WriteLine("");
+                Console.WriteLine("HP: ");
+                Console.WriteLine("Keys: ");
+
 
                 // Beskriv rummet (baserat på enum?):
 
@@ -72,6 +94,7 @@ namespace Lab_4_Spel
                             player.X++;
                         break;
                 }
+                player.check(map);
                 Console.Clear();
             }
         }
