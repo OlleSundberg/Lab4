@@ -10,6 +10,7 @@ namespace Lab_4_Spel
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("hello worldlololol");
         }
     }
 }
