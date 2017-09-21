@@ -11,7 +11,7 @@ namespace Lab_4_Spel
         public enum RoomType { Empty, Monster, Door, Exit, Key, Wall }
         static void Main(string[] args)
         {
-            Player player = new Player();
+            Player player = new Player(12, 3);
 
             //Map setup:
             int mapWidth = 14;
