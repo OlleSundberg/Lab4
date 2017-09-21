@@ -10,11 +10,12 @@ namespace Lab_4_Spel
     {
         public int X;
         public int Y;
+        public int HP = 100;
 
         public Player(int x, int y)
         {
             X = x;
-            Y = y;
+            Y = y;            
         }
         public void check(Room[,] map)
         {
