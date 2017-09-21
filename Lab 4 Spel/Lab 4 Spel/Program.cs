@@ -40,8 +40,9 @@ namespace Lab_4_Spel
                     {
                         if (x == player.X && y == player.Y)
                             Console.Write('@');
-                        else
+                        else if (map[x, y].visible)
                             Console.Write(map[x, y].mapIcon);
+                        else Console.Write(' ');
                     }
                     Console.WriteLine("");
                 }
@@ -52,25 +53,26 @@ namespace Lab_4_Spel
                 {
                     case 'W':
                     case 'w':
-                        //if ( Room.N ) {
-                        //Player Y++
-                        Console.WriteLine("You went north.");
-                        //} else {cw "you cant go this way";}
+                        if (map[player.X, player.Y - 1].type != RoomType.Wall)
+                            player.Y--;
                         break;
                     case 'A':
                     case 'a':
-                        //Player X--
+                        if (map[player.X - 1, player.Y].type != RoomType.Wall)
+                            player.X--;
                         break;
                     case 'S':
                     case 's':
-                        //Player Y--
+                        if (map[player.X, player.Y + 1].type != RoomType.Wall)
+                            player.Y++;
                         break;
                     case 'D':
                     case 'd':
-                        //Player X++
+                        if (map[player.X + 1, player.Y].type != RoomType.Wall)
+                            player.X++;
                         break;
                 }
-
+                Console.Clear();
             }
         }
     }

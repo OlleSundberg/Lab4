@@ -12,15 +12,16 @@ namespace Lab_4_Spel
         {
             Room[,] map = new Room[mapWidth, mapHeight];
 
+            //Create border
             for (int y = 0; y < mapHeight; y++)
             {
-                map[0, y] = new Wall(0, y);
-                map[mapWidth - 1, y] = new Wall(mapWidth - 1, y);
+                map[0, y] = new Wall(0, y, true);
+                map[mapWidth - 1, y] = new Wall(mapWidth - 1, y, true);
             }
             for (int x = 0; x < mapWidth; x++)
             {
-                map[x, 0] = new Wall(x, 0);
-                map[x, mapHeight - 1] = new Wall(x, mapHeight - 1);
+                map[x, 0] = new Wall(x, 0, true);
+                map[x, mapHeight - 1] = new Wall(x, mapHeight - 1, true);
             }
 
             bool oneKeyDone = false;
