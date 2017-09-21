@@ -30,7 +30,7 @@ namespace Lab_4_Spel
             {
                 for (int x = 1; x < mapWidth - 1; x++)
                 {
-                    if ((x == 1 && y == 3) || (x == 7 && y == 1))
+                    if ((x == 1 && y == 3) || (x == 6 && y == 1))
                         if (!oneKeyDone)
                         {
                             map[x, y] = new KeyRoom(x, y, "Red");
@@ -38,7 +38,7 @@ namespace Lab_4_Spel
                         }
                         else
                             map[x, y] = new KeyRoom(x, y, "Green");
-                    else if ((x == 7 && y == 3) || (x == 6 && y == 1))
+                    else if ((x == 7 && y == 3) || (x == 5 && y == 1))
                         if (!oneDoorDone)
                         {
                             map[x, y] = new DoorRoom(x, y, "Green");
