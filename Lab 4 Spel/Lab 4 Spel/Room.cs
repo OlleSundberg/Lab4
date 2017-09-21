@@ -65,4 +65,8 @@ namespace Lab_4_Spel
     {
         public Empty(int x, int y) : base(x, y, '.', Program.RoomType.Empty) { }
     }
+    class Exit : Room
+    {
+        public Exit(int x, int y) : base(x,y,'U', Program.RoomType.Exit) { }
+    }
 }
