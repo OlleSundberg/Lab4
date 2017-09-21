@@ -50,6 +50,8 @@ namespace Lab_4_Spel
                         map[x, y] = new MonsterRoom(x, y);
                     else if (x >= 1 && x <= 8 && y == 2)
                         map[x, y] = new Wall(x, y);
+                    else if (x == 1 && y == 1)
+                        map[x, y] = new Exit(x, y);
                     else
                         map[x, y] = new Empty(x, y);
                 }
