@@ -16,5 +16,12 @@ namespace Lab_4_Spel
             X = x;
             Y = y;
         }
+        public void check(Room[,] map)
+        {
+            map[X - 1, Y].visible = true;
+            map[X + 1, Y].visible = true;
+            map[X, Y + 1].visible = true;
+            map[X, Y - 1].visible = true;
+        }
     }
 }
