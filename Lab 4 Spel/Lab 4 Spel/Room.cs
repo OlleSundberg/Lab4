@@ -16,6 +16,8 @@ namespace Lab_4_Spel
         public char mapIcon { get; set; }
         public Program.RoomType type;
         public bool visible = false;
+        public ConsoleColor color = ConsoleColor.Gray;
+        public string specialColor = "";
 
         public Room(int x, int y, char mapIcon, Program.RoomType type)
         {
@@ -34,24 +36,33 @@ namespace Lab_4_Spel
     }
     class MonsterRoom : Room
     {
-        public MonsterRoom(int x, int y) : base(x, y, 'M', Program.RoomType.Monster) { }
+        public MonsterRoom(int x, int y) : base(x, y, 'M', Program.RoomType.Monster)
+        {
+            color = ConsoleColor.DarkMagenta;
+        }        
         int monsterHP = 100;
     }
     class DoorRoom : Room
     {
         public DoorRoom(int x, int y, string doorColor) : base(x, y, 'D', Program.RoomType.Door)
         {
-            this.doorColor = doorColor;
+            specialColor = doorColor;
+            if (doorColor == "Green")
+                color = ConsoleColor.Green;
+            else
+                color = ConsoleColor.Red;
         }
-        string doorColor;
     }
     class KeyRoom : Room
     {
         public KeyRoom(int x, int y, string keyColor) : base(x, y, 'n', Program.RoomType.Key)
         {
-            this.keyColor = keyColor;
+            specialColor = keyColor;
+            if (keyColor == "Green")
+                color = ConsoleColor.Green;
+            else
+                color = ConsoleColor.Red;
         }
-        string keyColor;
     }
     class Wall : Room
     {
@@ -67,6 +78,8 @@ namespace Lab_4_Spel
     }
     class Exit : Room
     {
-        public Exit(int x, int y) : base(x,y,'U', Program.RoomType.Exit) { }
+        public Exit(int x, int y) : base(x,y,'U', Program.RoomType.Exit) {
+            color = ConsoleColor.Cyan;
+        }
     }
 }
