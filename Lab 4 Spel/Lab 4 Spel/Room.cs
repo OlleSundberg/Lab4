@@ -16,7 +16,6 @@ namespace Lab_4_Spel
         public char mapIcon { get; set; }
         public Program.RoomType type;
 
-
         public Room(int x, int y, char mapIcon, Program.RoomType type)
         {
             this.x = x;
