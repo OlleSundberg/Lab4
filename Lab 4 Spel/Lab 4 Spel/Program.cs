@@ -1,9 +1,10 @@
-﻿// Olle:    49
-// Viktor:  44
-// ???
+﻿// Olle: 34
+// Viktor: 28 
+// 
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +13,48 @@ namespace Lab_4_Spel
 {
     class Program
     {
+        static Player player;
+
         public enum RoomType { Empty, Monster, Door, Exit, Key, Wall, Spike, Secret, Treasure }
         static void Main(string[] args)
         {
-            Player player = new Player(12, 3);
+            double widthScale = 9; //9
+            double heightScale = 5; //5 fullscreen
+
+            int visionMode = 0;
+            Console.WriteLine("Would you like (n)ormal vision mode(1) or (H)ARDCORE VISION MODE(2)?");
+            startOfSwitch:
+            switch (char.Parse(Console.ReadKey(true).KeyChar.ToString().ToUpper()))
+            {
+                case '1':
+                case 'N':
+                    visionMode = 1;
+                    break;
+                case '2':
+                case 'H':
+                    visionMode = 2;
+                    break;
+                default:
+                    goto startOfSwitch;
+            }
+            Console.Clear();
+            Console.WriteLine("What screen resolution would you like? Leave it empty for default. Width? ");
+
+            string input = Console.ReadLine();
+            widthScale = 4;
+            heightScale = 3;
+
+            if (input != "")
+            {
+                double.TryParse(input, out widthScale);
+
+                Console.WriteLine("Height? ");
+                input = Console.ReadLine();
+                double.TryParse(input, out heightScale);
+            }
+            Console.Clear();
+
+            player = new Player(12, 3);
             Keys keys = new Keys();
             Random rnd = new Random();
 
@@ -39,13 +78,17 @@ namespace Lab_4_Spel
             int turns = -1;
             while (player.HP > 0)
             {
-                player.check(map);
+                if (visionMode == 1)
+                    player.check(map);
+                else
+                    player.fow(map, mapWidth, mapHeight);
+
                 turns++;
-                for (double dy = 0; dy < mapHeight; dy += 0.34)
+                for (double dy = 0; dy < mapHeight; dy += 1 / heightScale + 0.01)
                 {
                     for (int i = 0; i < 1; i++)
                     {
-                        for (double dx = 0; dx < mapWidth; dx += 0.25)
+                        for (double dx = 0; dx < mapWidth; dx += 1 / widthScale + 0.01)
                         {
                             int y = (int)dy;
                             int x = (int)dx;
@@ -116,17 +159,15 @@ namespace Lab_4_Spel
 
                 // Beskriv rummet (baserat på enum?):
 
-                switch (Console.ReadKey(true).KeyChar)
+                switch (Console.ReadKey(true).Key)
                 {
-                    case 'W':
-                    case 'w':
+                    case ConsoleKey.W:
                         if (map[player.X, player.Y - 1].type != RoomType.Wall)
                             player.Y--;
                         else
                             turns--;
                         break;
-                    case 'A':
-                    case 'a':
+                    case ConsoleKey.A:
                         if (map[player.X - 1, player.Y].type == RoomType.Door &&
                             ((map[player.X - 1, player.Y].specialColor == "Green" && keys.getGreen()) ||
                             (map[player.X - 1, player.Y].specialColor == "Red" && keys.getRed())) ||
@@ -140,15 +181,13 @@ namespace Lab_4_Spel
                         else
                             turns--;
                         break;
-                    case 'S':
-                    case 's':
+                    case ConsoleKey.S:
                         if (map[player.X, player.Y + 1].type != RoomType.Wall)
                             player.Y++;
                         else
                             turns--;
                         break;
-                    case 'D':
-                    case 'd':
+                    case ConsoleKey.D:
                         if (map[player.X + 1, player.Y].type != RoomType.Wall)
                             player.X++;
                         else
@@ -202,7 +241,12 @@ namespace Lab_4_Spel
 
                 if (player.X == 1 && player.Y == 1)
                     winGame(turns);
-                player.check(map);
+
+                if (visionMode == 1)
+                    player.check(map);
+                else
+                    player.fow(map, mapWidth, mapHeight);
+
                 Console.Clear();
             }
             Console.WriteLine("Game over. You died.");
@@ -211,9 +255,7 @@ namespace Lab_4_Spel
         {
             turns++;
             Console.Clear();
-            Console.WriteLine("Congratulations, you win! Turns: " + turns);
-            Console.Write("Enter your initials: ");
-            string name = Console.ReadLine().Length > 3 ? Console.ReadLine().Substring(0, 3) : Console.ReadLine();
+            Console.WriteLine("Congratulations, you win! Score: " + (turns - player.HP - 4) + ". (The lower the better, '1' is the best)");
             Environment.Exit(0);
         }
     }
