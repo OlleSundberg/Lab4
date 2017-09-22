@@ -69,8 +69,10 @@ namespace Lab_4_Spel
                         map[x, y] = new Wall(x, y);
                     else if (x == 1 && y == 1)
                         map[x, y] = new Exit(x, y);
+                    else if (x == 11 && y == 1)
+                        map[x, y] = new SecretRoom(x, y);
                     else
-                        map[x, y] = new Empty(x, y);
+                        map[x, y] = new EmptyRoom(x, y);
                 }
             }
             return map;
