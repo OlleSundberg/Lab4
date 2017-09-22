@@ -156,9 +156,6 @@ namespace Lab_4_Spel
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("Turns: " + turns);
 
-
-                // Beskriv rummet (baserat på enum?):
-
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.W:
