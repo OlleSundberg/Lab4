@@ -43,12 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DoorRoom.cs" />
+    <Compile Include="EmptyRoom.cs" />
+    <Compile Include="Exit.cs" />
+    <Compile Include="KeyRoom.cs" />
     <Compile Include="Keys.cs" />
     <Compile Include="MapBuilder.cs" />
+    <Compile Include="MonsterRoom.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
+    <Compile Include="SecretRoom.cs" />
+    <Compile Include="SpikeRoom.cs" />
+    <Compile Include="TreasureRoom.cs" />
+    <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
