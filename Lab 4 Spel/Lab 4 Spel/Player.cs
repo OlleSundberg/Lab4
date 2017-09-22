@@ -34,14 +34,10 @@ namespace Lab_4_Spel
             map[X, Y - 1].visible = true;
         }
         public void fow(Room[,] map, int w, int h)
-        {            
-            for (int x = 1; x < w - 1; x++)
-            {
-                for (int y = 1; y < h - 1; y++)
-                {
-                    map[x, y].visible = false;
-                }
-            }
+        {
+            foreach (Room r in map)
+                r.visible = false; 
+                    
             map[X - 1, Y - 1].visible = true;
             map[X + 1, Y - 1].visible = true;
             map[X - 1, Y + 1].visible = true;
