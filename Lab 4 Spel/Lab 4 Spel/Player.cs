@@ -11,6 +11,9 @@ namespace Lab_4_Spel
         public int X;
         public int Y;
         public int HP = 100;
+        public bool wasHurt = false;
+        public bool wasSpiked = false;
+        public bool foundTreasure = false;
 
         public Player(int x, int y)
         {
