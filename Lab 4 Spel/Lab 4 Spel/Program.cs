@@ -12,11 +12,12 @@ namespace Lab_4_Spel
 {
     class Program
     {
-        public enum RoomType { Empty, Monster, Door, Exit, Key, Wall }
+        public enum RoomType { Empty, Monster, Door, Exit, Key, Wall, Spike, Secret, Treasure }
         static void Main(string[] args)
         {
             Player player = new Player(12, 3);
             Keys keys = new Keys();
+            Random rnd = new Random();
 
             //Map setup:
             int mapWidth = 14;
@@ -28,15 +29,15 @@ namespace Lab_4_Spel
             /*
              01234567890123
            0 ##############
-           1 #U    Dn M   #
+           1 #U D Dn  M  n#
            2 #########  M #
            3 #n     D     #
            4 ##############            
 */
 
             //Game-loop:
-            int turns = 0;
-            while (true)
+            int turns = -1;
+            while (player.HP > 0)
             {
                 player.check(map);
                 turns++;
@@ -67,23 +68,43 @@ namespace Lab_4_Spel
                 }
 
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine("");
+                if (player.wasHurt)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("The monster attacked you!");
+                    player.wasHurt = false;
+                }
+                else if (player.wasSpiked)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You stepped on spikes.");
+                    player.wasSpiked = false;
+                }
+                else if (player.foundTreasure)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("You found treasure!");
+                    player.foundTreasure = false;
+                }
+                else
+                    Console.WriteLine("");
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write("HP: ");
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(player.HP);
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write("Keys: ");
-                if (keys.hasRed)
+                if (keys.getRed())
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("o--m ");
                 }
-                if (keys.hasGreen)
+                if (keys.getGreen())
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write("o--m ");
                 }
-                if (keys.hasBlue)
+                if (keys.getBlue())
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
                     Console.Write("o--m");
@@ -107,9 +128,9 @@ namespace Lab_4_Spel
                     case 'A':
                     case 'a':
                         if (map[player.X - 1, player.Y].type == RoomType.Door &&
-                            ((map[player.X - 1, player.Y].specialColor == "Green" && keys.hasGreen) ||
-                            (map[player.X - 1, player.Y].specialColor == "Red" && keys.hasRed)) ||
-                            (map[player.X - 1, player.Y].specialColor == "Blue" && keys.hasBlue))
+                            ((map[player.X - 1, player.Y].specialColor == "Green" && keys.getGreen()) ||
+                            (map[player.X - 1, player.Y].specialColor == "Red" && keys.getRed())) ||
+                            (map[player.X - 1, player.Y].specialColor == "Blue" && keys.getBlue()))
                         {
                             map[player.X - 1, player.Y].type = RoomType.Empty;
                             map[player.X - 1, player.Y].mapIcon = '.';
@@ -133,19 +154,50 @@ namespace Lab_4_Spel
                         else
                             turns--;
                         break;
+                    default:
+                        turns--;
+                        break;
                 }
 
                 if (map[player.X, player.Y].type == RoomType.Key)
                 {
                     if (map[player.X, player.Y].specialColor == "Green")
-                        keys.hasGreen = true;
+                        keys.setGreen(true);
                     else if (map[player.X, player.Y].specialColor == "Red")
-                        keys.hasRed = true;
+                        keys.setRed(true);
                     else
-                        keys.hasBlue = true;
+                        keys.setBlue(true);
                     map[player.X, player.Y].type = RoomType.Empty;
                     map[player.X, player.Y].mapIcon = '.';
                     map[player.X, player.Y].color = ConsoleColor.Gray;
+                }
+                if (map[player.X, player.Y].type == RoomType.Monster)
+                {
+                    turns += 3;
+                    player.HP -= 20;
+                    player.wasHurt = true;
+                }
+                else if (map[player.X, player.Y].type == RoomType.Secret)
+                {
+                    if (rnd.Next(3) <= 1)
+                    {
+                        map[player.X, player.Y] = new SpikeRoom(player.X, player.Y);
+                        player.HP -= 25;
+                        player.wasSpiked = true;
+                        turns++;
+                    }
+                    else
+                    {
+                        map[player.X, player.Y] = new TreasureRoom(player.X, player.Y);
+                        turns -= 3;
+                        player.foundTreasure = true;
+                    }
+                }
+                else if (map[player.X, player.Y].type == RoomType.Spike)
+                {
+                    player.HP -= 25;
+                    player.wasSpiked = true;
+                    turns++;
                 }
 
                 if (player.X == 1 && player.Y == 1)
@@ -153,12 +205,13 @@ namespace Lab_4_Spel
                 player.check(map);
                 Console.Clear();
             }
+            Console.WriteLine("Game over. You died.");
         }
         static void winGame(int turns)
         {
+            turns++;
             Console.Clear();
             Console.WriteLine("Congratulations, you win! Turns: " + turns);
-            Console.ReadKey();
             Environment.Exit(0);
         }
     }
