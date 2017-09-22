@@ -40,32 +40,25 @@ namespace Lab_4_Spel
             {
                 player.check(map);
                 turns++;
-                for (int y = 0; y < mapHeight; y++)
+                for (double dy = 0; dy < mapHeight; dy += 0.34)
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 1; i++)
                     {
-                        for (int x = 0; x < mapWidth; x++)
+                        for (double dx = 0; dx < mapWidth; dx += 0.25)
                         {
+                            int y = (int)dy;
+                            int x = (int)dx;
                             if (x == player.X && y == player.Y)
                             {
                                 Console.ForegroundColor = ConsoleColor.DarkBlue;
-                                Console.Write('@');
-                                Console.Write('@');
-                                Console.Write('@');
                                 Console.Write('@');
                             }
                             else if (map[x, y].visible)
                             {
                                 Console.ForegroundColor = map[x, y].color;
                                 Console.Write(map[x, y].mapIcon);
-                                Console.Write(map[x, y].mapIcon);
-                                Console.Write(map[x, y].mapIcon);
-                                Console.Write(map[x, y].mapIcon);
                             }
                             else {
-                                Console.Write(' ');
-                                Console.Write(' ');
-                                Console.Write(' ');
                                 Console.Write(' ');
                             }
                         }
@@ -113,7 +106,7 @@ namespace Lab_4_Spel
                         break;
                     case 'A':
                     case 'a':
-                        if (map[player.X-1,player.Y].type == RoomType.Door &&
+                        if (map[player.X - 1, player.Y].type == RoomType.Door &&
                             ((map[player.X - 1, player.Y].specialColor == "Green" && keys.hasGreen) ||
                             (map[player.X - 1, player.Y].specialColor == "Red" && keys.hasRed)) ||
                             (map[player.X - 1, player.Y].specialColor == "Blue" && keys.hasBlue))
@@ -121,7 +114,7 @@ namespace Lab_4_Spel
                             map[player.X - 1, player.Y].type = RoomType.Empty;
                             map[player.X - 1, player.Y].mapIcon = '.';
                         }
-                        if (map[player.X - 1, player.Y].type != RoomType.Wall && map[player.X-1,player.Y].type != RoomType.Door)
+                        if (map[player.X - 1, player.Y].type != RoomType.Wall && map[player.X - 1, player.Y].type != RoomType.Door)
                             player.X--;
                         else
                             turns--;
