@@ -8,7 +8,7 @@ namespace Lab_4_Spel
 {
     class KeyRoom : Room
     {
-        public KeyRoom(int x, int y, string keyColor) : base(x, y, 'n', Program.RoomType.Key)
+        public KeyRoom(int x, int y, string keyColor) : base(x, y, 'K', Program.RoomType.Key)
         {
             specialColor = keyColor;
             if (keyColor == "Green")
