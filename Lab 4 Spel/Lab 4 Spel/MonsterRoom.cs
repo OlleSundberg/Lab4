@@ -12,6 +12,5 @@ namespace Lab_4_Spel
         {
             color = ConsoleColor.DarkMagenta;
         }
-        int monsterHP = 100;
     }
 }
