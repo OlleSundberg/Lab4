@@ -7,7 +7,9 @@ https://github.com/OlleSundberg/Lab4/wiki
 Här är exempel på var krävda saker finns. Det finns oftast fler om du letar runt.
 G krav:
 Klasshierarki:
+
   I Room.cs. Room är en abstrakt basklass, och alla andra rum är subklasser.
+  
 Privata egenskaper och get/set:
   I Keys.cs. Tre privata bools med get/set.
 Interface & abstrakt:
