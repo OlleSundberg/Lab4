@@ -8,7 +8,7 @@ namespace Lab_4_Spel
 {
     class Exit : Room
     {
-        public Exit(int x, int y) : base(x, y, 'U', Program.RoomType.Exit)
+        public Exit(int x, int y) : base(x, y, 'E', Program.RoomType.Exit)
         {
             color = ConsoleColor.Cyan;
         }
