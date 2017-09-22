@@ -212,6 +212,8 @@ namespace Lab_4_Spel
             turns++;
             Console.Clear();
             Console.WriteLine("Congratulations, you win! Turns: " + turns);
+            Console.Write("Enter your initials: ");
+            string name = Console.ReadLine().Length > 3 ? Console.ReadLine().Substring(0, 3) : Console.ReadLine();
             Environment.Exit(0);
         }
     }
