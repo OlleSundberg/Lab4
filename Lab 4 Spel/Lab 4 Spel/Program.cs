@@ -1,10 +1,10 @@
-﻿// Olle: 34
+﻿// High scores (the lower the better)
+// Olle: 34
 // Viktor: 28 
 // 
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,27 +18,30 @@ namespace Lab_4_Spel
         public enum RoomType { Empty, Monster, Door, Exit, Key, Wall, Spike, Secret, Treasure }
         static void Main(string[] args)
         {
+            Console.Title = "IndianJonas 2 - K: Key, D: Door, M: Monster, ?: Secret, o: Coin, ^: Spike E: Exit.";
+
+            //Skärmstorlekar
             double widthScale = 9; //9
             double heightScale = 5; //5 fullscreen
 
             int visionMode = 0;
             Console.WriteLine("Would you like (n)ormal vision mode(1) or (H)ARDCORE VISION MODE(2)?");
-            startOfSwitch:
+            startOfVisionSwitch:
             switch (char.Parse(Console.ReadKey(true).KeyChar.ToString().ToUpper()))
             {
                 case '1':
                 case 'N':
-                    visionMode = 1;
+                    visionMode = 1; // Player.check(map);
                     break;
                 case '2':
                 case 'H':
-                    visionMode = 2;
+                    visionMode = 2; // Player.fow(map);
                     break;
                 default:
-                    goto startOfSwitch;
+                    goto startOfVisionSwitch;
             }
             Console.Clear();
-            Console.WriteLine("What screen resolution would you like? Leave it empty for default. Width? ");
+            Console.Write("What screen resolution would you like? Leave it empty for default.\nWidth? ");
 
             string input = Console.ReadLine();
             widthScale = 4;
@@ -48,7 +51,7 @@ namespace Lab_4_Spel
             {
                 double.TryParse(input, out widthScale);
 
-                Console.WriteLine("Height? ");
+                Console.Write("Height? ");
                 input = Console.ReadLine();
                 double.TryParse(input, out heightScale);
             }
@@ -65,25 +68,18 @@ namespace Lab_4_Spel
             MapBuilder mb = new MapBuilder();
             Room[,] map = mb.BuildMap(mapWidth, mapHeight);
 
-            /*
-             01234567890123
-           0 ##############
-           1 #U D Dn  M  n#
-           2 #########  M #
-           3 #n     D     #
-           4 ##############            
-*/
-
             //Game-loop:
-            int turns = -1;
+            int turns = -1; // -1 då den adderar 1 i början av loopen, så att den faktiskt börjar på 0.
             while (player.HP > 0)
             {
+                turns++;
+
                 if (visionMode == 1)
                     player.check(map);
                 else
                     player.fow(map, mapWidth, mapHeight);
 
-                turns++;
+                //Rita kartan:
                 for (double dy = 0; dy < mapHeight; dy += 1 / heightScale + 0.01)
                 {
                     for (int i = 0; i < 1; i++)
