@@ -106,6 +106,7 @@ namespace Lab_4_Spel
                     }
                 }
 
+                //Visa status, inventory etc
                 Console.ForegroundColor = ConsoleColor.Gray;
                 if (player.wasHurt)
                 {
@@ -152,6 +153,8 @@ namespace Lab_4_Spel
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("Turns: " + turns);
 
+                // Gå-kommandon. Kollar om man kan gå innan den försöker flytta. Alla dörrar kan endast låsas upp
+                // från höger sida, det är därför som alla dörr specifika handlingar finns på 'case ConsoleKey.A:'.
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.W:
