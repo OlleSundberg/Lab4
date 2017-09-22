@@ -34,7 +34,7 @@ namespace Lab_4_Spel
             map[X, Y - 1].visible = true;
         }
         public void fow(Room[,] map, int w, int h)
-        {
+        {            
             for (int x = 1; x < w - 1; x++)
             {
                 for (int y = 1; y < h - 1; y++)
