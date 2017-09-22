@@ -27,8 +27,6 @@ namespace Lab_4_Spel
             int keysMade = 0;
             int doorsMade = 0;
 
-            bool oneKeyDone = false;
-            bool oneDoorDone = false;
             for (int y = 1; y < mapHeight - 1; y++)
             {
                 for (int x = 1; x < mapWidth - 1; x++)
