@@ -1,7 +1,7 @@
 ﻿// High scores (the lower the better)
 // Olle: 34
 // Viktor: 28 
-// 
+// Tobias: 7
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace Lab_4_Spel
     class Program
     {
         static Player player;
-
+                
         public enum RoomType { Empty, Monster, Door, Exit, Key, Wall, Spike, Secret, Treasure }
         static void Main(string[] args)
         {
@@ -79,6 +79,7 @@ namespace Lab_4_Spel
                 else
                     player.fow(map, mapWidth, mapHeight);
 
+
                 //Rita kartan:
                 for (double dy = 0; dy < mapHeight; dy += 1 / heightScale + 0.01)
                 {
@@ -90,7 +91,7 @@ namespace Lab_4_Spel
                             int x = (int)dx;
                             if (x == player.X && y == player.Y)
                             {
-                                Console.ForegroundColor = ConsoleColor.DarkBlue;
+                                Console.ForegroundColor = ConsoleColor.Blue;
                                 Console.Write('@');
                             }
                             else if (map[x, y].visible)
@@ -253,6 +254,7 @@ namespace Lab_4_Spel
             Console.Clear();
             Console.WriteLine("Congratulations, you win! Score: " + (turns - player.HP - 4) + ". (The lower the better, '1' is the best)");
             Environment.Exit(0);
+            Console.ReadKey();
         }
     }
 }
