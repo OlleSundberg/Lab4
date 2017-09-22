@@ -48,6 +48,7 @@ namespace Lab_4_Spel
                         {
                             if (x == player.X && y == player.Y)
                             {
+                                Console.ForegroundColor = ConsoleColor.DarkBlue;
                                 Console.Write('@');
                                 Console.Write('@');
                                 Console.Write('@');
@@ -60,7 +61,6 @@ namespace Lab_4_Spel
                                 Console.Write(map[x, y].mapIcon);
                                 Console.Write(map[x, y].mapIcon);
                                 Console.Write(map[x, y].mapIcon);
-                                Console.ForegroundColor = ConsoleColor.Gray;
                             }
                             else {
                                 Console.Write(' ');
@@ -72,6 +72,8 @@ namespace Lab_4_Spel
                         Console.WriteLine("");
                     }
                 }
+
+                Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("");
                 Console.Write("HP: ");
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -86,6 +88,11 @@ namespace Lab_4_Spel
                 if (keys.hasGreen)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("o--m ");
+                }
+                if (keys.hasBlue)
+                {
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.Write("o--m");
                 }
                 Console.WriteLine("");
@@ -108,7 +115,8 @@ namespace Lab_4_Spel
                     case 'a':
                         if (map[player.X-1,player.Y].type == RoomType.Door &&
                             ((map[player.X - 1, player.Y].specialColor == "Green" && keys.hasGreen) ||
-                            (map[player.X - 1, player.Y].specialColor == "Red" && keys.hasRed)))
+                            (map[player.X - 1, player.Y].specialColor == "Red" && keys.hasRed)) ||
+                            (map[player.X - 1, player.Y].specialColor == "Blue" && keys.hasBlue))
                         {
                             map[player.X - 1, player.Y].type = RoomType.Empty;
                             map[player.X - 1, player.Y].mapIcon = '.';
@@ -117,16 +125,6 @@ namespace Lab_4_Spel
                             player.X--;
                         else
                             turns--;
-                        if (map[player.X, player.Y].type == RoomType.Key)
-                        {
-                            if (map[player.X, player.Y].specialColor == "Green")
-                                keys.hasGreen = true;
-                            else
-                                keys.hasRed = true;
-                            map[player.X, player.Y].type = RoomType.Empty;
-                            map[player.X, player.Y].mapIcon = '.';
-                            map[player.X, player.Y].color = ConsoleColor.Gray;
-                        }
                         break;
                     case 'S':
                     case 's':
@@ -143,6 +141,20 @@ namespace Lab_4_Spel
                             turns--;
                         break;
                 }
+
+                if (map[player.X, player.Y].type == RoomType.Key)
+                {
+                    if (map[player.X, player.Y].specialColor == "Green")
+                        keys.hasGreen = true;
+                    else if (map[player.X, player.Y].specialColor == "Red")
+                        keys.hasRed = true;
+                    else
+                        keys.hasBlue = true;
+                    map[player.X, player.Y].type = RoomType.Empty;
+                    map[player.X, player.Y].mapIcon = '.';
+                    map[player.X, player.Y].color = ConsoleColor.Gray;
+                }
+
                 if (player.X == 1 && player.Y == 1)
                     winGame(turns);
                 player.check(map);

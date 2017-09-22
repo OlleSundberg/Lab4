@@ -49,8 +49,10 @@ namespace Lab_4_Spel
             specialColor = doorColor;
             if (doorColor == "Green")
                 color = ConsoleColor.Green;
-            else
+            else if (doorColor == "Red")
                 color = ConsoleColor.Red;
+            else
+                color = ConsoleColor.Blue;
         }
     }
     class KeyRoom : Room
@@ -60,8 +62,10 @@ namespace Lab_4_Spel
             specialColor = keyColor;
             if (keyColor == "Green")
                 color = ConsoleColor.Green;
-            else
+            else if (keyColor == "Red")
                 color = ConsoleColor.Red;
+            else
+                color = ConsoleColor.Blue;
         }
     }
     class Wall : Room

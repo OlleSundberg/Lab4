@@ -10,5 +10,6 @@ namespace Lab_4_Spel
     {
         public bool hasRed = false;
         public bool hasGreen = false;
+        public bool hasBlue = false;
     }
 }
